@@ -1,5 +1,6 @@
 using FluentAssertions;
 using NUnit.Framework;
+using Option.Interfaces;
 
 namespace Option.Tests.TestCases;
 
@@ -7,12 +8,13 @@ namespace Option.Tests.TestCases;
 public class SomeTests
 {
     private const string ValidValue = "Valid Value";
+
     private const string DefaultValue = "Default Value";
 
     [Test]
     public void Some_Get_ReturnsValue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         some.Get().Should().Be(ValidValue);
     }
@@ -20,7 +22,7 @@ public class SomeTests
     [Test]
     public void Some_GetOrElse_ReturnsValue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         some.GetOrElse(DefaultValue).Should().Be(ValidValue);
     }
@@ -28,7 +30,7 @@ public class SomeTests
     [Test]
     public void Some_GetOrCall_ReturnsValue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         some.GetOrCall(() => DefaultValue).Should().Be(ValidValue);
     }
@@ -36,7 +38,7 @@ public class SomeTests
     [Test]
     public async Task Some_GetOrCallAsync_ReturnsValue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         var result = await some.GetOrCallAsync(async () => await Task.FromResult(DefaultValue));
         result.Should().Be(ValidValue);
@@ -45,7 +47,7 @@ public class SomeTests
     [Test]
     public void Some_GetOrThrow_ReturnsValue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         var result = some.GetOrThrow(new Exception());
         result.Should().Be(ValidValue);
@@ -54,7 +56,7 @@ public class SomeTests
     [Test]
     public void Some_IfValid_RunsActionWithString()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
         var output = string.Empty;
 
         some.IfValid(x => output = x);
@@ -65,7 +67,7 @@ public class SomeTests
     [Test]
     public void Some_IfValid_RunsActionWithoutString()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
         var output = string.Empty;
 
         some.IfValid(() => output = DefaultValue);
@@ -76,7 +78,7 @@ public class SomeTests
     [Test]
     public void Some_IfInvalid_DoesNothing()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
         var output = string.Empty;
 
         some.IfInvalid(() => output = DefaultValue);
@@ -87,7 +89,7 @@ public class SomeTests
     [Test]
     public void Some_IfValidAsync_RunsActionWithString()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
         var output = string.Empty;
 
         some.IfValidAsync(async x =>
@@ -104,7 +106,7 @@ public class SomeTests
     [Test]
     public void Some_IfValidAsync_RunsActionWithoutString()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
         var output = string.Empty;
 
         some.IfValidAsync(async () =>
@@ -120,7 +122,7 @@ public class SomeTests
     [Test]
     public void Some_IsValid_IsTrue()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         some.IsValid().Should().BeTrue();
     }
@@ -128,18 +130,13 @@ public class SomeTests
     [Test]
     public void Some_IsInvalid_IsFalse()
     {
-        var some = Option<string>.From(ValidValue);
+        var some = GetSome();
 
         some.IsInvalid().Should().BeFalse();
     }
 
-    private static void AddLowerAToString(ref string val)
+    private static IOption<string> GetSome()
     {
-        val = $"{val}a";
-    }
-
-    private static void WriteToConsole(string message)
-    {
-        Console.WriteLine(message);
+        return Option<string>.From(ValidValue);
     }
 }
