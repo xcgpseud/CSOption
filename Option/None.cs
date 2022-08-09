@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Option.Exceptions;
+﻿using Option.Exceptions;
 using Option.Interfaces;
 
 namespace Option;

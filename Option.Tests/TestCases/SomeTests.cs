@@ -1,16 +1,11 @@
 using FluentAssertions;
 using NUnit.Framework;
-using Option.Interfaces;
 
 namespace Option.Tests.TestCases;
 
 [TestFixture]
-public class SomeTests
+public class SomeTests : TestBase
 {
-    private const string ValidValue = "Valid Value";
-
-    private const string DefaultValue = "Default Value";
-
     [Test]
     public void Some_Get_ReturnsValue()
     {
@@ -138,10 +133,5 @@ public class SomeTests
         var some = GetSome();
 
         some.IsInvalid().Should().BeFalse();
-    }
-
-    private static IOption<string> GetSome()
-    {
-        return Option<string>.From(ValidValue);
     }
 }

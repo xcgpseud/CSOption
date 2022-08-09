@@ -6,11 +6,8 @@ using Option.Interfaces;
 namespace Option.Tests.TestCases;
 
 [TestFixture]
-public class NoneTests
+public class NoneTests : TestBase
 {
-    private const string DefaultValue = "Default Value";
-
-    private const string ExceptionMessage = "Exception Message";
 
     [Test]
     public void None_Get_ThrowsCorrectException()
@@ -104,10 +101,5 @@ public class NoneTests
         var none = GetNone();
 
         none.IsInvalid().Should().BeTrue();
-    }
-
-    private static IOption<string> GetNone()
-    {
-        return Option<string>.From(null);
     }
 }
