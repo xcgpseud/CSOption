@@ -15,19 +15,19 @@ public class None<T> : Option<T>
 
     public override T GetOrThrow(Exception defaultException) => throw defaultException;
 
-    public override void IfValid(Func<T> func)
+    public override void IfValid(Action<T> _)
     {
     }
 
-    public override void IfValid(Action func)
+    public override void IfValid(Action _)
     {
     }
 
     public override void IfInvalid(Action func) => func();
 
-    public override async Task IfValidAsync(Func<Task<T>> func) => await Task.CompletedTask;
+    public override async Task IfValidAsync(Func<T, Task> _) => await Task.CompletedTask;
 
-    public override async Task IfValidAsync(Action func) => await Task.CompletedTask;
+    public override async Task IfValidAsync(Func<Task> _) => await Task.CompletedTask;
 
     public override bool IsValid() => false;
 
