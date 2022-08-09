@@ -59,7 +59,8 @@ public class SomeTests
         var some = GetSome();
         var output = string.Empty;
 
-        some.IfValid(x => output = x);
+        some.IfValid(x => output = x)
+            .Should().Be(some);
 
         output.Should().Be(ValidValue);
     }
@@ -70,7 +71,8 @@ public class SomeTests
         var some = GetSome();
         var output = string.Empty;
 
-        some.IfValid(() => output = DefaultValue);
+        some.IfValid(() => output = DefaultValue)
+            .Should().Be(some);
 
         output.Should().Be(DefaultValue);
     }
@@ -81,18 +83,19 @@ public class SomeTests
         var some = GetSome();
         var output = string.Empty;
 
-        some.IfInvalid(() => output = DefaultValue);
+        some.IfInvalid(() => output = DefaultValue)
+            .Should().Be(some);
 
         output.Should().BeEmpty();
     }
 
     [Test]
-    public void Some_IfValidAsync_RunsActionWithString()
+    public async Task Some_IfValidAsync_RunsActionWithString()
     {
         var some = GetSome();
         var output = string.Empty;
 
-        some.IfValidAsync(async x =>
+        var result = await some.IfValidAsync(async x =>
         {
             output = x;
 
@@ -100,22 +103,24 @@ public class SomeTests
             await Task.CompletedTask;
         });
 
+        result.Should().Be(some);
         output.Should().Be(ValidValue);
     }
 
     [Test]
-    public void Some_IfValidAsync_RunsActionWithoutString()
+    public async Task Some_IfValidAsync_RunsActionWithoutString()
     {
         var some = GetSome();
         var output = string.Empty;
 
-        some.IfValidAsync(async () =>
+        var result = await some.IfValidAsync(async () =>
         {
             output = DefaultValue;
 
             await Task.CompletedTask;
         });
 
+        result.Should().Be(some);
         output.Should().Be(DefaultValue);
     }
 

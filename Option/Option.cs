@@ -42,15 +42,15 @@ public abstract class Option<T> : IOption<T>
 
     public abstract T GetOrThrow(Exception defaultException);
 
-    public abstract void IfValid(Action<T> func);
+    public abstract IOption<T> IfValid(Action<T> func);
 
-    public abstract void IfValid(Action func);
+    public abstract IOption<T> IfValid(Action func);
 
-    public abstract void IfInvalid(Action func);
+    public abstract IOption<T> IfInvalid(Action func);
 
-    public abstract Task IfValidAsync(Func<T, Task> func);
+    public abstract Task<IOption<T>> IfValidAsync(Func<T, Task> func);
 
-    public abstract Task IfValidAsync(Func<Task> func);
+    public abstract Task<IOption<T>> IfValidAsync(Func<Task> func);
 
     public abstract bool IsValid();
 

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using Option.Exceptions;
+using Option.Interfaces;
 
 namespace Option;
 
@@ -15,19 +16,20 @@ public class None<T> : Option<T>
 
     public override T GetOrThrow(Exception defaultException) => throw defaultException;
 
-    public override void IfValid(Action<T> _)
+    public override IOption<T> IfValid(Action<T> _) => this;
+
+    public override IOption<T> IfValid(Action _) => this;
+
+    public override IOption<T> IfInvalid(Action func)
     {
+        func();
+
+        return this;
     }
 
-    public override void IfValid(Action _)
-    {
-    }
-
-    public override void IfInvalid(Action func) => func();
-
-    public override async Task IfValidAsync(Func<T, Task> _) => await Task.CompletedTask;
-
-    public override async Task IfValidAsync(Func<Task> _) => await Task.CompletedTask;
+    public override async Task<IOption<T>> IfValidAsync(Func<T, Task> _) => await Task.FromResult(this);
+W
+    public override async Task<IOption<T>> IfValidAsync(Func<Task> _) => await Task.FromResult(this);
 
     public override bool IsValid() => false;
 

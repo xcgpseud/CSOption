@@ -1,4 +1,6 @@
-﻿namespace Option;
+﻿using Option.Interfaces;
+
+namespace Option;
 
 public class Some<T> : Option<T>
 {
@@ -19,17 +21,35 @@ public class Some<T> : Option<T>
 
     public override T GetOrThrow(Exception _) => _value;
 
-    public override void IfValid(Action<T> func) => func(_value);
-
-    public override void IfValid(Action func) => func();
-
-    public override void IfInvalid(Action _)
+    public override IOption<T> IfValid(Action<T> func)
     {
+        func(_value);
+
+        return this;
     }
 
-    public override async Task IfValidAsync(Func<T, Task> func) => await func(_value);
+    public override IOption<T> IfValid(Action func)
+    {
+        func();
 
-    public override async Task IfValidAsync(Func<Task> func) => await func();
+        return this;
+    }
+
+    public override IOption<T> IfInvalid(Action _) => this;
+
+    public override async Task<IOption<T>> IfValidAsync(Func<T, Task> func)
+    {
+        await func(_value);
+
+        return this;
+    }
+
+    public override async Task<IOption<T>> IfValidAsync(Func<Task> func)
+    {
+        await func();
+
+        return this;
+    }
 
     public override bool IsValid() => true;
 
