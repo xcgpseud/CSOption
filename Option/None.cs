@@ -28,7 +28,7 @@ public class None<T> : Option<T>
     }
 
     public override async Task<IOption<T>> IfValidAsync(Func<T, Task> _) => await Task.FromResult(this);
-W
+
     public override async Task<IOption<T>> IfValidAsync(Func<Task> _) => await Task.FromResult(this);
 
     public override bool IsValid() => false;
