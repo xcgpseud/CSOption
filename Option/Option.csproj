@@ -4,6 +4,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Authors>Chris Evans</Authors>
+        <Description>Option type, value wrapper with custom validity checking and acting based on said validity checks.</Description>
+        <PackageProjectUrl>https://github.com/xcgpseud/CSOption</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/xcgpseud/CSOption/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageId>OptionValueWrapper</PackageId>
     </PropertyGroup>
 
 </Project>
